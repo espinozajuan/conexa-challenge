@@ -42,7 +42,7 @@ export default function CharacterSection({
         </div>
       ) : loading ? (
         <div className="flex justify-center items-center h-64">
-          <Loader message="Cargando personajes" size="md" />
+          <Loader message="Cargando personajes..." size="md" />
         </div>
       ) : (
         <>

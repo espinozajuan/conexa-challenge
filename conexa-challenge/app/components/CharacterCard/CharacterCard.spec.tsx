@@ -1,5 +1,3 @@
-// Tests del componente CharacterCard
-
 import { render, screen, fireEvent } from "@testing-library/react";
 import CharacterCard from "./CharacterCard";
 import { Character } from "../../types/api";

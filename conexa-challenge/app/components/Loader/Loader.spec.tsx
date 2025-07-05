@@ -1,5 +1,3 @@
-// Tests del componente Loader
-
 import { render, screen } from "@testing-library/react";
 import Loader from "./Loader";
 
