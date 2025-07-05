@@ -1,12 +1,7 @@
-import { Episode } from "../types/api";
-
-interface EpisodeListProps {
-  episodes: Episode[];
-  title: string;
-}
+import { EpisodeListProps } from "./EpisodeList.types";
 
 export default function EpisodeList({ episodes, title }: EpisodeListProps) {
-  const hasScroll = episodes.length > 8; // Mostrar indicador si hay más de 8 episodios
+  const hasScroll = episodes.length > 8;
 
   return (
     <div className="border rounded-lg p-4 bg-white">

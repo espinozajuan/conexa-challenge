@@ -1,18 +1,6 @@
-import { Character } from "../types/api";
-import CharacterCard from "./CharacterCard";
-import Pagination from "./Pagination";
-
-interface CharacterSectionProps {
-  title: string;
-  characters: Character[];
-  selectedCharacter: Character | null;
-  disabledCharacter?: Character | null;
-  currentPage: number;
-  totalPages: number;
-  onCharacterSelect: (character: Character | null) => void;
-  onPageChange: (page: number) => void;
-  loading?: boolean;
-}
+import { CharacterSectionProps } from "./CharacterSection.types";
+import CharacterCard from "../CharacterCard";
+import Pagination from "../Pagination";
 
 export default function CharacterSection({
   title,

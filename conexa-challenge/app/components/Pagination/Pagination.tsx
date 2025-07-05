@@ -1,8 +1,4 @@
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
+import { PaginationProps } from "./Pagination.types";
 
 export default function Pagination({
   currentPage,

@@ -1,11 +1,4 @@
-import { Character } from "../types/api";
-
-interface CharacterCardProps {
-  character: Character;
-  isSelected?: boolean;
-  disabled?: boolean;
-  onSelect?: (character: Character | null) => void;
-}
+import { CharacterCardProps } from "./CharacterCard.types";
 
 export default function CharacterCard({
   character,
@@ -23,7 +16,7 @@ export default function CharacterCard({
           : "border-gray-200 hover:border-gray-300 hover:shadow-md cursor-pointer active:scale-95 bg-white"
       }`}
       onClick={() => {
-        if (disabled) return; // No hacer nada si está disabled
+        if (disabled) return;
 
         if (isSelected) {
           onSelect?.(null);
@@ -63,7 +56,15 @@ export default function CharacterCard({
               disabled ? "text-gray-400" : "text-gray-600"
             }`}
           >
-            <span className="inline-block w-2 h-2 bg-current rounded-full mr-2"></span>
+            <span
+              className={`inline-block w-2 h-2 rounded-full mr-2 ${
+                character.status === "Alive"
+                  ? "bg-green-500"
+                  : character.status === "Dead"
+                  ? "bg-red-500"
+                  : "bg-gray-400"
+              }`}
+            ></span>
             {character.status} - {character.species}
           </p>
           {disabled && (
