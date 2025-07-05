@@ -12,6 +12,7 @@ export default function CharacterSection({
   onCharacterSelect,
   onPageChange,
   loading = false,
+  error = null,
 }: CharacterSectionProps) {
   return (
     <div className="w-full">
@@ -26,7 +27,19 @@ export default function CharacterSection({
         </p>
       </div>
 
-      {loading ? (
+      {error ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-center">
+            <div className="text-lg text-red-600 mb-2">{error}</div>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Recargar página
+            </button>
+          </div>
+        </div>
+      ) : loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="text-lg text-black">Cargando personajes...</div>
         </div>

@@ -10,4 +10,5 @@ export interface CharacterSectionProps {
   onCharacterSelect: (character: Character | null) => void;
   onPageChange: (page: number) => void;
   loading?: boolean;
+  error?: string | null;
 }

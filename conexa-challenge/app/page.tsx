@@ -30,14 +30,19 @@ export default function Home() {
   const [loadingCol2, setLoadingCol2] = useState(true);
   const [loadingEpisodes, setLoadingEpisodes] = useState(false);
 
+  const [errorCol1, setErrorCol1] = useState<string | null>(null);
+  const [errorCol2, setErrorCol2] = useState<string | null>(null);
+  const [errorEpisodes, setErrorEpisodes] = useState<string | null>(null);
+
   const loadCharactersCol1 = async (page: number) => {
     setLoadingCol1(true);
+    setErrorCol1(null);
     try {
       const data = await getCharacters(page);
       setCharactersCol1(data.results);
       setTotalPagesCol1(data.info.pages);
     } catch (error) {
-      console.error("Error loading characters col1:", error);
+      setErrorCol1("Error al cargar personajes. Intenta recargar la página.");
     } finally {
       setLoadingCol1(false);
     }
@@ -45,12 +50,13 @@ export default function Home() {
 
   const loadCharactersCol2 = async (page: number) => {
     setLoadingCol2(true);
+    setErrorCol2(null);
     try {
       const data = await getCharacters(page);
       setCharactersCol2(data.results);
       setTotalPagesCol2(data.info.pages);
     } catch (error) {
-      console.error("Error loading characters col2:", error);
+      setErrorCol2("Error al cargar personajes. Intenta recargar la página.");
     } finally {
       setLoadingCol2(false);
     }
@@ -64,10 +70,12 @@ export default function Home() {
         shared: [],
         character2Only: [],
       });
+      setErrorEpisodes(null);
       return;
     }
 
     setLoadingEpisodes(true);
+    setErrorEpisodes(null);
     try {
       const episodeIds = getAllEpisodeIds(selectedChar1, selectedChar2);
       const episodeData = await getEpisodes(episodeIds);
@@ -80,7 +88,9 @@ export default function Home() {
       );
       setEpisodeSections(sections);
     } catch (error) {
-      console.error("Error loading episodes:", error);
+      setErrorEpisodes(
+        "Error al cargar episodios. Intenta recargar la página."
+      );
     } finally {
       setLoadingEpisodes(false);
     }
@@ -110,7 +120,7 @@ export default function Home() {
   const bothSelected = hasChar1 && hasChar2;
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl min-h-screen">
+    <div className="container mx-auto p-6 max-w-8xl min-h-screen">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-black mb-2">
           Rick & Morty Explorador de Episodios
@@ -132,6 +142,7 @@ export default function Home() {
           onCharacterSelect={setSelectedChar1}
           onPageChange={handlePageChangeCol1}
           loading={loadingCol1}
+          error={errorCol1}
         />
 
         <CharacterSection
@@ -144,6 +155,7 @@ export default function Home() {
           onCharacterSelect={setSelectedChar2}
           onPageChange={handlePageChangeCol2}
           loading={loadingCol2}
+          error={errorCol2}
         />
       </div>
 
@@ -169,7 +181,19 @@ export default function Home() {
           )}
         </div>
 
-        {loadingEpisodes ? (
+        {errorEpisodes ? (
+          <div className="flex justify-center items-center h-32">
+            <div className="text-center">
+              <div className="text-lg text-red-600 mb-2">{errorEpisodes}</div>
+              <button
+                onClick={loadEpisodes}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Reintentar
+              </button>
+            </div>
+          </div>
+        ) : loadingEpisodes ? (
           <div className="flex justify-center items-center h-32">
             <div className="text-lg text-black">Cargando episodios...</div>
           </div>
