@@ -216,7 +216,7 @@ export default function Home() {
           </div>
         ) : loadingEpisodes ? (
           <div className="flex justify-center items-center h-32">
-            <div className="text-lg text-black">Cargando episodios...</div>
+            <Loader message="Cargando episodios..." size="md" />
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
