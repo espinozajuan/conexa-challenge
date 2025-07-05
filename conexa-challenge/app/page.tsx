@@ -6,6 +6,7 @@ import { getAllEpisodeIds, separateEpisodes } from "./lib/episodes";
 import { Character, Episode } from "./types/api";
 import CharacterSection from "./components/CharacterSection";
 import EpisodeList from "./components/EpisodeList";
+import Loader from "./components/Loader";
 
 export default function Home() {
   const [charactersCol1, setCharactersCol1] = useState<Character[]>([]);
@@ -33,6 +34,8 @@ export default function Home() {
   const [errorCol1, setErrorCol1] = useState<string | null>(null);
   const [errorCol2, setErrorCol2] = useState<string | null>(null);
   const [errorEpisodes, setErrorEpisodes] = useState<string | null>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadCharactersCol1 = async (page: number) => {
     setLoadingCol1(true);
@@ -97,8 +100,18 @@ export default function Home() {
   };
 
   useEffect(() => {
-    loadCharactersCol1(1);
-    loadCharactersCol2(1);
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        await Promise.all([loadCharactersCol1(1), loadCharactersCol2(1)]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -118,6 +131,14 @@ export default function Home() {
   const hasChar1 = selectedChar1 !== null;
   const hasChar2 = selectedChar2 !== null;
   const bothSelected = hasChar1 && hasChar2;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center">
+        <Loader message="Cargando dimensiones de Rick y Morty..." size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6 max-w-8xl min-h-screen">

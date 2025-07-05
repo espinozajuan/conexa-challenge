@@ -1,6 +1,7 @@
 import { CharacterSectionProps } from "./CharacterSection.types";
 import CharacterCard from "../CharacterCard";
 import Pagination from "../Pagination";
+import Loader from "../Loader";
 
 export default function CharacterSection({
   title,
@@ -41,7 +42,7 @@ export default function CharacterSection({
         </div>
       ) : loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="text-lg text-black">Cargando personajes...</div>
+          <Loader message="Cargando personajes" size="md" />
         </div>
       ) : (
         <>
