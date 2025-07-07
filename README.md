@@ -25,7 +25,6 @@ npm run dev
 ```
 
 - Por defecto correrá en `http://localhost:3000`  
-- Cada vez que guardes cambios, la página se recargará automáticamente.
 
 ### 5. Ejecutar los tests
 
